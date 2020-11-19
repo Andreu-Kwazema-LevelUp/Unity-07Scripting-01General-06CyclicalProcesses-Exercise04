@@ -3,27 +3,40 @@ using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
-    public bool IsGameOver { get; private set; }
-
+    #region Fields
+    
     private EndPoint _endPoint;
+
+    #endregion
+
+
+    #region Unity LifeCycle
 
     private void Awake()
     {
         _endPoint = FindObjectOfType<EndPoint>();
     }
 
-    private void Update()
+    private void OnEnable()
     {
-        if (_endPoint.IsEnter && !IsGameOver)
-        {
-            GameOver();
-
-            IsGameOver = true;
-        }
+        _endPoint.OnTrigger += GameOver;
     }
+
+    private void OnDisable()
+    {
+        _endPoint.OnTrigger -= GameOver;
+    }
+
+    #endregion
+
+
+    #region Methods
 
     private void GameOver()
     {
+        _endPoint.OnTrigger -= GameOver;
         SceneManager.LoadScene("GameOver");
     }
+
+    #endregion
 }
