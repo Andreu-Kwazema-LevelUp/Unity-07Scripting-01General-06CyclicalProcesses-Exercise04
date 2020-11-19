@@ -2,7 +2,22 @@
 
 public class Switcher : MonoBehaviour
 {
-    public bool IsSwitched { get; private set; }
+    #region Properties
+
+    public bool IsSwitched { get; private set;}
+
+    #endregion
+
+
+    #region Events
+
+    public delegate void OnTriggerHandler();
+    public event OnTriggerHandler OnTrigger;
+
+    #endregion
+
+
+    #region Unity Methods
 
     private void Start()
     {
@@ -11,6 +26,12 @@ public class Switcher : MonoBehaviour
 
     private void OnTriggerEnter()
     {
-        IsSwitched = true;
+        if (!IsSwitched)
+        {
+            IsSwitched = true;
+            OnTrigger?.Invoke();
+        }
     }
+
+    #endregion
 }

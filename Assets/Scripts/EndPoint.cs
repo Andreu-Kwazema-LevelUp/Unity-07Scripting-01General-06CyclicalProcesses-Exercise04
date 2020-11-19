@@ -4,7 +4,22 @@ using UnityEngine;
 
 public class EndPoint : MonoBehaviour
 {
+    #region Properties
+
     public bool IsEnter { get; private set; }
+
+    #endregion
+    
+
+    #region Events
+
+    public delegate void OnTriggerHandler();
+    public event OnTriggerHandler OnTrigger;
+
+    #endregion
+
+
+    #region Unity Methods
 
     private void Start()
     {
@@ -13,7 +28,12 @@ public class EndPoint : MonoBehaviour
 
     private void OnTriggerEnter()
     {
-        IsEnter = true;
+        if (!IsEnter)
+        {
+            IsEnter = true;
+            OnTrigger?.Invoke();
+        }
     }
 
+    #endregion
 }
