@@ -18,23 +18,27 @@ public class Door : MonoBehaviour
 
     private void OnEnable()
     {
-        _switcher.OnTrigger += OpenDoor;
+        if (_switcher != null)
+            _switcher.OnTrigger += OpenDoor;
     }
 
     private void OnDisable()
     {
-        _switcher.OnTrigger -= OpenDoor;
+        if (_switcher != null)
+            _switcher.OnTrigger -= OpenDoor;
     }
 
     #endregion
 
 
-    #region Private Methods
+    #region General Methods
 
     private void OpenDoor()
     {
+        if (_switcher != null)
+            _switcher.OnTrigger -= OpenDoor;
+
         transform.position = new Vector3(transform.position.x, transform.position.y + 2.5f, transform.position.z);
-        _switcher.OnTrigger -= OpenDoor;
     }
 
     #endregion

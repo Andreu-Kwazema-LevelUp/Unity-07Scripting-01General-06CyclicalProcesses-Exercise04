@@ -19,22 +19,26 @@ public class GameController : MonoBehaviour
 
     private void OnEnable()
     {
-        _endPoint.OnTrigger += GameOver;
+        if (_endPoint != null)
+            _endPoint.OnTrigger += GameOver;
     }
 
     private void OnDisable()
     {
-        _endPoint.OnTrigger -= GameOver;
+        if (_endPoint != null)
+            _endPoint.OnTrigger -= GameOver;
     }
 
     #endregion
 
 
-    #region Methods
+    #region General Methods
 
     private void GameOver()
     {
-        _endPoint.OnTrigger -= GameOver;
+        if (_endPoint != null)
+            _endPoint.OnTrigger -= GameOver;
+
         SceneManager.LoadScene("GameOver");
     }
 
